@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" ></script>
+    <script src=" {{ asset('js/toastr.min.js') }} "></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,6 +20,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href = "{{ asset('css/toastr.min.css') }}">
+
 </head>
 <body>
     <div id="app">
@@ -46,7 +49,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} 
+                                    {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -73,7 +76,13 @@
                     @if(Auth::check())
                     <div class="col-lg-4">
                         <li class="list-group-item">
-                            <a href="/home">Home</a>
+                            <a href="{{ route('home')}}">Home</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('categories')}}">Categories</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('category.create')}}">Create a Category</a>
                         </li>
                         <li class="list-group-item">
                             <a href="{{ route('post.create') }}">Create New Post</a>
@@ -87,5 +96,13 @@
             </div>  
         </main>
     </div>
+
+    <script>
+        @if(Session::has('success'))
+            toastr.success("{{ Session::get('success') }}")
+
+        @endif
+    </script>
+
 </body>
 </html>
