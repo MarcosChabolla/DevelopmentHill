@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="card">
+	<div class="card-header">Categories</div>
 
 	<table class="table table-hover">
 		<thead>
@@ -18,6 +19,7 @@
 		</thead>
 
 		<tbody>
+			@if($categories->count() > 0)
 			@foreach($categories as $category)
 
 				<tr>
@@ -37,6 +39,10 @@
 				</tr>
 
 			@endforeach
+			@else
+				<tr><th colspan= "5" class="text-center">No Categories Yet.</th></tr>
+
+			@endif
 		</tbody>
 	</table>
 </div>

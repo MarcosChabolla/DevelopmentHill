@@ -11,10 +11,19 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        App\User::create([
+        $user = App\User::create([
         	'name' => 'Marcos',
         	'email' => 'marcos.chabolla@gmail.com',
-        	'password' => bcrypt('chabolla4')
+        	'password' => bcrypt('chabolla4'),
+        	'admin' => 1
+        ]);
+
+        App\Profile::create([
+        	'user_id' => $user->id,
+        	'avatar' => 'uploads/avatars/1.jpg',
+        	'about' => 'Lorem ipsum dolor sit amet, consectetur',
+        	'facebook' => 'facebook.com',
+        	'youtube' => 'youtube.com'	
         ]);
     }
 }
