@@ -13,6 +13,9 @@
 				Name
 			</th>
 			<th>
+				Email
+			</th>
+			<th>
 				Permissions
 			</th>
 			<th>
@@ -25,16 +28,25 @@
 				@foreach($users as $user)
 					<tr>
 						<td>
-							<img src="{{ asset($user->profile->avatar) }} alt = "" width = "60px" height = "60px" style = "border-radius: 50%">
+							<img src="{{ asset($user->profile->avatar) }}" alt = "" width = "60px" height = "60px" style = "border-radius: 50%">
 						</td>
 						<td>
 							{{ $user->name }}
 						</td>
 						<td>
-							Permissions
+							@if($user->admin)
+								<a href = "{{ route('user.not.admin', ['id' => $user->id]) }}" class="btn btn-xs btn-danger">Demote</a>	
+							@else
+								<a href = "{{ route('user.admin', ['id' => $user->id]) }}" class="btn btn-xs btn-success">Make Admin</a>
+							@endif
 						</td>
 						<td>
-						Delete
+						{{ $user->email }}
+						</td>
+						<td>
+							@if(!Auth::id() !== $user->id)
+								<a href = "{{ route('user.delete', ['id' => $user->id]) }}" class="btn btn-xs btn-danger">Delete User</a>
+							@endif
 						</td>
 						
 					</tr>

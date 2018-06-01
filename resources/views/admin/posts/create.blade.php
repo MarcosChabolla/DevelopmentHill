@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+
+@stop
+
 @section('content')
 
 	@include('admin.includes.errors')
@@ -47,4 +51,12 @@
 		</div>
 	</div>
 	
+@stop
+
+@section('scripts')
+ <script>
+    $(document).ready(function() {
+        $('#content').summernote();
+    });
+  </script>
 @stop
