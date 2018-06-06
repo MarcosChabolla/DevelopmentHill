@@ -1,5 +1,17 @@
 <?php
 
+
+
+Route::post('/subscribe', function(){
+	$email = request('email');
+
+	Newsletter::subscribe($email);
+
+	Session::flash('subscribed', 'Subscribed to the newsletter!');
+	return redirect()->back();
+});
+
+
 Route::get('/test', function(){
 	return App\User::find(1)->profile;
 });
@@ -8,6 +20,32 @@ Route::get('/',[
 		'uses' => 'FrontEndController@index',
     	'as'  => 'index'
 	]);
+
+Route::get('/post/{slug}', [
+	'uses' => 'FrontEndController@singlePost',
+    'as'  => 'post.single'
+]);
+
+Route::get('/category/{id}', [
+	'uses' => 'FrontEndController@category',
+    'as'  => 'category.single'
+]);
+
+Route::get('/tag/{id}', [
+	'uses' => 'FrontEndController@tag',
+    'as'  => 'tag.single'
+]);
+
+Route::get('/results', function(){
+	$posts = \App\Post::where('title','like', '%' . request('query'). '%')->get();
+
+	return view('results')->with('posts', $posts)
+						  ->with('title', 'Search results: ' . request('query'))
+                          ->with('settings', \App\Setting::first())
+                          ->with('categories', \App\Category::take(5)->get())
+                          ->with('query', request('query'));
+});
+
 
 Auth::routes();
 
@@ -18,7 +56,7 @@ Route::post('logout', [
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 	
-	Route::get('/home',[
+	Route::get('/dashboard',[
 		'uses' => 'HomeController@index',
     	'as'  => 'home'
 	]);

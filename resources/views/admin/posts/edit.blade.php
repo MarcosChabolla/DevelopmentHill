@@ -56,5 +56,16 @@
 			</form>
 		</div>
 	</div>
+	Lorem
 	
 @stop
+
+@section('scripts')
+
+ <script>
+    $(document).ready(function() {
+        $('#content').summernote();
+    });
+  </script>
+
+  @stop
